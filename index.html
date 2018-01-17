@@ -14,26 +14,26 @@
     <div class="container">
         <div class="panel">
             <section class="step1">
-                <input type="button" class="scan" value="扫描私钥">
+                <input type="button" class="scan" data-local="scan-key">
             </section>
             <section class="step2">
-                <div class="k">红包私钥</div>
+                <div class="k" data-local="packet-key"></div>
                 <div class="v packet_hash">5KRJwz8wc7aTX7deykMD3y1uXaFyH9H4ccK1z68at5qEqJBXVVV</div>
-                <div class="k">红包地址</div>
+                <div class="k" data-local="packet-address"></div>
                 <div class="v packet_address">1NubKTUGUuGNwATXKLbzdAYNDtJieaSroN</div>
-                <div class="k">红包金额</div>
+                <div class="k" data-local="packet-amount"></div>
                 <div class="v packet_amount" style="height: 26px;">0.XXXX BCH</div>
-                <input type="button" value="下一步" class="next write">
+                <input type="button" data-local="next" class="next write">
             </section>
             <section class="step3">
-                <div class="label">接收地址</div>
-                <input type="text" class="address" placeholder="请填写Bitcoin Cash（BCH）地址">
-                <div class="label">注：请不要输入红包地址</div>
-                <input type="button" value="领取阳光普照" class="next get_bch">
+                <div class="label" data-local="receive-address"></div>
+                <input type="text" class="address" data-local="placeholder">
+                <div class="label" data-local="note-address"></div>
+                <input type="button" data-local="get-bch" class="next get_bch">
             </section>
             <section class="step4">
-                <div class="label">领取成功</div>
-                <div class="k hash" style="">交易哈希</div>
+                <div class="label" data-local="get-bch-success"></div>
+                <div class="k hash" data-local="hashrate"></div>
                 <div class="v hashrate">c8dba7f77758cb90a31f3a61070978929aa2078ee27f916320361c6ca9590b11</div>
             </section>
         </div>
@@ -43,13 +43,14 @@
 
     <div class="error">
         <div class="error-message">
-            <div class="error-info">请不要使用相同地址</div>
-            <input type="button" value="我知道了" class="got">
+            <div class="error-info" data-local="not-same-address"></div>
+            <input type="button"  data-local="gotIt" class="got">
         </div>
     </div>
 </div>
 
 <script src="local/jquery-1.9.1.min.js"></script>
-<!--<script src="app.js"></script>-->
+<script src="local/i18n.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

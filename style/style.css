@@ -15,6 +15,10 @@ section{
     flex-flow: column;
 }
 
+input{
+    outline: none;
+}
+
 .step1, .step2,.step3,.step4{
     display: none;
 }
