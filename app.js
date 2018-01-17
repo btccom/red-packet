@@ -1,18 +1,21 @@
 //这段代 主要是获取摄像头的视频流并显示在Video 签中
 var canvas = null, context = null, video = null;
+var snap=document.getElementById('snap');
 
 
+browserInspect();
+snap.onclick=function(){
+    startPat();
+}
 
- $("#snap").click(function () {
-     BrowserInspect();
- });
 
 //开始拍照
 function startPat() {
     setTimeout(function () {//防止调用过快
         if (context) {
             context.drawImage(video, 0, 0, 320, 320);
-            CatchCode();
+            var decoded = $('#canvas').qrdecode();
+            console.log(decoded);
         }
     }, 200);
 }
@@ -24,22 +27,23 @@ function CatchCode() {
         var imgData = canvas.toDataURL();
         //将图像转换为base64数据
         var base64Data = imgData;//.substr(22); //在前端截取22位之后的字符串作为图像数据
+        console.log(base64Data);
         //开始异步上
-        $.post("saveimg.php", {"img": base64Data}, function (result) {
-            printHtml("解析结果：" + result.data);
-            if (result.status == "success" && result.data != "") {
-                printHtml("解析结果成功！");
-            } else {
-                startPat();//如果没有解析出来则重新抓拍解析
-            }
-        }, "json");
+        // $.post("saveimg.php", {"img": base64Data}, function (result) {
+        //     printHtml("解析结果：" + result.data);
+        //     if (result.status == "success" && result.data != "") {
+        //         printHtml("解析结果成功！");
+        //     } else {
+        //         startPat();//如果没有解析出来则重新抓拍解析
+        //     }
+        // }, "json");
     }
 }
 
 
 
 
-function BrowserInspect(){
+function browserInspect(){
     try {
         canvas = document.getElementById("canvas");
         context = canvas.getContext("2d");
@@ -84,10 +88,12 @@ function BrowserInspect(){
 
         navigator.mediaDevices.getUserMedia(constraints)
             .then(function (stream) {
-                var video = document.querySelector('video');
                 video.src = window.URL.createObjectURL(stream);
                 video.onloadedmetadata = function (e) {
                     video.play();
+                    context.drawImage(video, 0, 0, 320, 320);
+                    // var decoded = $('#canvas').qrdecode();
+                    // console.log(decoded);
                 };
             })
             .catch(function (err) {
