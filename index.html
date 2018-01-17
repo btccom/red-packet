@@ -10,17 +10,46 @@
 <link href="style/style.css" rel="stylesheet">
 <body>
 
-<div id="support"></div>
-<div id="contentHolder">
-    <video id="video" width="320" height="320" autoplay></video>
-    <canvas style="display:none;background-color:#F00;" id="canvas" width="320" height="320"></canvas>
-    <br/>
-    <button id="snap" style=" height:50px; width:120px;">开始扫描</button>
+<div class="main-body">
+    <div class="container">
+        <div class="panel">
+            <section class="step1">
+                <input type="button" class="scan" value="扫描私钥">
+            </section>
+            <section class="step2">
+                <div class="k">红包私钥</div>
+                <div class="v packet_hash">5KRJwz8wc7aTX7deykMD3y1uXaFyH9H4ccK1z68at5qEqJBXVVV</div>
+                <div class="k">红包地址</div>
+                <div class="v packet_address">1NubKTUGUuGNwATXKLbzdAYNDtJieaSroN</div>
+                <div class="k">红包金额</div>
+                <div class="v packet_amount" style="height: 26px;">0.XXXX BCH</div>
+                <input type="button" value="下一步" class="next write">
+            </section>
+            <section class="step3">
+                <div class="label">接收地址</div>
+                <input type="text" class="address" placeholder="请填写Bitcoin Cash（BCH）地址">
+                <div class="label">注：请不要输入红包地址</div>
+                <input type="button" value="领取阳光普照" class="next get_bch">
+            </section>
+            <section class="step4">
+                <div class="label">领取成功</div>
+                <div class="k hash" style="">交易哈希</div>
+                <div class="v hashrate">c8dba7f77758cb90a31f3a61070978929aa2078ee27f916320361c6ca9590b11</div>
+            </section>
+        </div>
+    </div>
+    <div class="logo"></div>
+    <div class="btccom"></div>
+
+    <div class="error">
+        <div class="error-message">
+            <div class="error-info">请不要使用相同地址</div>
+            <input type="button" value="我知道了" class="got">
+        </div>
+    </div>
 </div>
 
 <script src="local/jquery-1.9.1.min.js"></script>
-<script src="local/qrdecode.js"></script>
-<script src="local/decode.js"></script>
-<script src="app.js"></script>
+<!--<script src="app.js"></script>-->
 </body>
 </html>
