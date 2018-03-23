@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>2018年会扫码领取 BCH 红包</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+	<link rel="shortcut icon" href="/static/images/favicon.ico">
+	<link href="/static/style/style.css" rel="stylesheet">
+	<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="//res.wx.qq.com/open/js/jweixin-1.2.1.js"></script>
+
+	<script type="text/javascript">
+	// weixin-签名-wxJSON
+	var wx = { };
+	var wxJson = {{ wxJson | safe }}; 
+	// wx-js-SDK-config
+	wx.config = {
+		debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert，参数信息会通过log打出。
+		appId: wxJson.appID, // 必填，公众号的唯一标识
+		timestamp: wxJson.timestamp, // 必填，生成签名的时间戳
+		nonceStr: wxJson.nonceStr, // 必填，生成签名的随机串
+		signature: wxJson.signature,// 必填，签名，见附录1
+		jsApiList: [
+	  		'scanQRCode' //打开微信扫一扫功能
+		] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	};
+
+	</script>
+
+
+</head>
+<body>
+
+<div class="main-body">
+	<div class="container">
+		<div class="panel">
+			<section class="step1">
+				<input type="button" class="scan" data-local="scan-key">
+			</section>
+			<section class="step2">
+				<div class="k" data-local="packet-key"></div>
+				<div class="v packet_hash"></div>
+				<div class="k" data-local="packet-address"></div>
+				<div class="v packet_address">1NubKTUGUuGNwATXKLbzdAYNDtJieaSroN</div>
+				<div class="k" data-local="packet-amount"></div>
+				<div class="v packet_amount" style="height: 20px;">0.XXXX BCH</div>
+				<input type="button" data-local="next" class="next write">
+			</section>
+			<section class="step3">
+				<div class="scan-address"></div>
+				<div class="label" data-local="receive-address"></div>
+				<input type="text" class="address" data-local="placeholder">
+				<div class="label" data-local="note-address"></div>
+				<input type="button" data-local="get-bch" class="next get_bch">
+			</section>
+			<section class="step4">
+				<div class="label" data-local="get-bch-success"></div>
+				<div class="k hash" data-local="hashrate"></div>
+				<div class="v hashrate">c8dba7f77758cb90a31f3a61070978929aa2078ee27f916320361c6ca9590b11</div>
+			</section>
+		</div>
+	</div>
+	<div class="logo"></div>
+	<div class="btccom"></div>
+
+	<div class="error">
+		<div class="error-message">
+			<div class="error-info" data-local="not-same-address"></div>
+			<input type="button"  data-local="gotIt" class="got">
+		</div>
+	</div>
+</div>
+
+
+	<!--<h1>2018年会扫码领取 BCH 红包</h1>-->
+
+	<!--<button id="wxScanQRCode">打开摄像头识别二维码</button>-->
+	<!--<input type="text" name="" id="wxScanQRCodeResult" />-->
+
+
+	<a href="/token">token</a>
+<script>
+    var setp1=document.querySelector('.step1');
+    var setp2=document.querySelector('.step2');
+    var setp3=document.querySelector('.step3');
+    var setp4=document.querySelector('.step4');
+    var scan=document.querySelector('.scan');
+    var write=document.querySelector('.write');
+    var get_bch=document.querySelector('.get_bch');
+
+    var packet_hash=document.querySelector('.packet_hash');
+    var packet_address=document.querySelector('.packet_address');
+    var packet_amount=document.querySelector('.packet_amount');
+
+    var address=document.querySelector('.address');
+    var hashrate=document.querySelector('.hashrate');
+    var error=document.querySelector('.error');
+    var error_info=document.querySelector('.error-info');
+
+
+
+    scan.onclick=function () {
+        wx.scanQRCode({
+            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (res) {
+                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+
+                $.post('https://welfaredev.btc.com/api/test/amount',{private_key:result})
+                    .then(data=>{
+                        packet_hash.textContent=result;
+                        $(setp1).hide();
+                        $(setp2).show();
+                    })
+            }
+        });
+    }
+
+    write.onclick=function () {
+        $(setp2).hide();
+        $(setp3).show();
+    }
+
+    get_bch.onclick=function () {
+        $(setp3).hide();
+        $(setp4).show();
+    }
+</script>
+
+<script src="/static/js/i18n.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
